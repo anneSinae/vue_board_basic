@@ -7,6 +7,7 @@
     <p>{{ article.body }}</p>
 
     <el-button @click="goBack">Back</el-button>
+    <el-button @click="editArticle">수정</el-button>
   </div>
 </template>
 
@@ -35,6 +36,10 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1);
+    },
+
+    editArticle() {
+      this.$router.push({path: `/board/write/${this.$route.params.id}`});
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="write">
-    <h1>글작성</h1>
+    <h1>{{ getTitle }}</h1>
     <el-input type="text" v-model="title"></el-input>
     <el-input type="textarea" rows="10" v-model="contents"></el-input>
 
@@ -22,6 +22,26 @@ export default {
     }
   },
 
+  computed: {
+    getTitle() {
+      if(this.$route.params.id) return "게시물 수정하기";
+      return "게시물 작성하기";
+    }
+  },
+
+  mounted() {
+    if(this.$route.params.id) {
+      apiBoard.getArticle(this.$route.params.id)
+      .then((response) => {
+        this.title = response.data.title;
+        this.contents = response.data.body;
+      })
+      .catch((e) => {
+            console.log(e);
+      });
+    }
+  },
+
   methods: {
     goBack() {
       this.$router.go(-1);
@@ -30,6 +50,17 @@ export default {
     writeArticle() {
       if(!this.title || !this.contents) {
         this.$message.error("제목과 본문을 작성해주세요.");
+        return;
+      }
+
+      if(this.$route.params.id) {
+        apiBoard.patchArticle(this.$route.params.id, this.title, this.body)
+        .then(() => {
+          this.$router.push({path: `/board/detail/${this.$route.params.id}`});
+        })
+        .catch((e) => {
+          console.log(e);
+        });
         return;
       }
 
