@@ -8,6 +8,9 @@
     </el-table-column>
     <el-table-column prop="title" label="title"> </el-table-column>
   </el-table>
+
+  <br>
+  <a href="/board/write" class="btn-write">글쓰기</a>
 </template>
 
 <script>
@@ -43,3 +46,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.btn-write {position: fixed; right: 20px; bottom: 20px;}
+</style>
