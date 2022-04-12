@@ -1,4 +1,4 @@
-# vue_study
+# vue_board_basic
 
 ## Project setup
 ```
